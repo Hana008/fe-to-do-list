@@ -1,26 +1,39 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import AppendsList from './AppendsList';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  state = {
+    listItems: ["this", "andThis"]
+  };
+  render() {
+    return (
+      <label>
+        <AppendsList addNewTask={this.addNewTask} />
+        <ToDoList listItems={this.state.listItems} />
+      </label>)
+  }
+
+  addNewTask = (task) => {
+    this.setState({ listItems: [...this.state.listItems, task] })
+  };
 }
+const ToDoList = props => {
+  return (
+    <ul>
+      {
+        props.listItems.map((listItem) => {
+          return <li key={listItem}>
+            <p>
+              {listItem}
+            </p>
+            <button>delete</button>
+          </li>
+        })
+      }
+    </ul>
+  )
+};
+
 
 export default App;
